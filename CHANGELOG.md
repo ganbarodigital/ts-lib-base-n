@@ -31,6 +31,8 @@ The following changes have been completed, and will be included in the next tagg
 
 ### Dependencies
 
+* Added `@ganbarodigital/ts-on-error`
+
 ### Tools
 
 ## v0.0.1
