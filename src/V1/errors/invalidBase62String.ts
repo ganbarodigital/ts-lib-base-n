@@ -52,7 +52,7 @@ export class InvalidBase62StringError extends Error {
      *        the string that didn't contain base62-encoded data
      */
     constructor(input: string) {
-        super();
+        super(invalidBase62String.toString());
         this.invalidString = input;
     }
 }
