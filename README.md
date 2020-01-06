@@ -38,7 +38,18 @@ TBD.
 
 TBD.
 
-### mustBeBase62StringOfLength()
+### isBase62String()
+
+```typescript
+function isBase62String(input: string): boolean
+```
+
+`isBase62String()` is a _data guard_.
+
+* Returns `true` if the `input` only contains valid base62 characters.
+* Returns `false` otherwise.
+
+### mustBeBase62String()
 
 TBD.
 
