@@ -17,8 +17,7 @@
   "contributors": [
     "Stuart Herbert <stuherbert@ganbarodigital.com> (https://ganbarodigital.com)"
   ],
-  "keywords": [
-  ],
+  "keywords": [],
   "files": [
     "lib/**/*",
     "CHANGELOG.md",
