@@ -1,8 +1,8 @@
 {
-  "name": "@ganbarodigital/<<YOUR-PACKAGE-NAME>>",
+  "name": "@ganbarodigital/ts-base62-parser",
   "version": "0.0.1",
-  "description": "Converts human-readable UUIDs to bytes",
-  "repository": "github:ganbarodigital/<<YOUR-PACKAGE-NAME>>",
+  "description": "Support for working with base62-encoding",
+  "repository": "github:ganbarodigital/ts-base62-parser",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
