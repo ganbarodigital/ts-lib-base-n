@@ -29,6 +29,7 @@ The following changes have been completed, and will be included in the next tagg
 * Added `isInvalidBase62StringError()` type guard
 * Added `InvalidBase62StringError` error type
 * Added `invalidBase62StringError` error ID symbol
+* Added `mustBeBase62StringError()` data guarantee
 * Added `throwInvalidBase62StringError()` error handler
 
 ### Fixes

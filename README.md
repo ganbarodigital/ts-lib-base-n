@@ -71,7 +71,20 @@ function isBase62String(input: string): boolean
 
 ### mustBeBase62String()
 
-TBD.
+```typescript
+import { OnError } from "@ganbarodigital/ts-on-error/V1";
+
+function mustBeBase62String(input: string, onError?: OnError<string|any>): void
+```
+
+`mustBeBase62String()` is a _data guarantee_.
+
+* If the `input` string is valid base62-encoded data, it will return.
+* Otherwise, it will call the supplied `onError` error callback.
+
+Other notes:
+
+* `onError` is optional. It uses `throwInvalidBase62StringError()` if you do not provide one.
 
 ## V1 Error API
 
