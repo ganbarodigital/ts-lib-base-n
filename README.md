@@ -1,21 +1,21 @@
-# Base62 Parser for Typescript
+# BaseN Library for Typescript
 
 ## Introduction
 
-This TypeScript library will convert to/from base62 encoding.
+This TypeScript library will convert to/from various baseN encodings.
 
-Base62 encoding is very useful for shortening UUIDs in a URL-friendly way.
+We've built this to use in shortening UUIDs in a URL-friendly way. There's nothing stopping you from using it to encode anything you want.
 
 ## Quick Start
 
 ```
 # run this from your Terminal
-npm install @ganbarodigital/ts-base62-parser
+npm install @ganbarodigital/ts-lib-baseN
 ```
 
 ```typescript
 // add this import to your Typescript code
-import { Uuid } from "@ganbarodigital/ts-uuid-parser/V1"
+import { base64UrlEncode } from "@ganbarodigital/ts-lib-baseN/V1"
 ```
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.
