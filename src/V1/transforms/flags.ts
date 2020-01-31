@@ -31,14 +31,12 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { base62FromBytes } from "./bytes";
 
-describe("base62FromBytes()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("1234567890");
-        const expectedValue = inputValue.toString("base64");
-        const actualValue = base62FromBytes(inputValue);
-
-        expect(actualValue).toEqual(expectedValue);
-    });
-});
+/**
+ * these flags affect the behaviour of our transform functions
+ */
+export enum BaseNFlags {
+    default = 0,
+    none = 0,
+    addPadding = 1,
+}

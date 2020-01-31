@@ -31,13 +31,23 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { base62StringFromBytes } from "./strings";
+import { base32UrlEncodeFromBuffer, base32UrlEncodeFromString } from "./base32";
 
-describe("base62StringFromBytes()",  () => {
+describe("base32UrlEncodeFromBuffer()",  () => {
     it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("012345");
-        const expectedValue = inputValue.toString("base64");
-        const actualValue = base62StringFromBytes(inputValue);
+        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
+        const expectedValue = "1gdbopogd49cgoashi6276o0va";
+        const actualValue = base32UrlEncodeFromBuffer(inputValue);
+
+        expect(actualValue).toEqual(expectedValue);
+    });
+});
+
+describe("base32UrlEncodeFromString()",  () => {
+    it("encodes a string", () => {
+        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
+        const expectedValue = "1j60r62phh75hiqd1hc4q2qd3268oiqe1l6sp2qcpi6co3gp9mcco36pb1";
+        const actualValue = base32UrlEncodeFromString(inputValue);
 
         expect(actualValue).toEqual(expectedValue);
     });

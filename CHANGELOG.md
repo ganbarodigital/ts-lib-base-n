@@ -31,14 +31,18 @@ The following changes have been completed, and will be included in the next tagg
 * Added `invalidBase62StringError` error ID symbol
 * Added `mustBeBase62StringError()` data guarantee
 * Added `throwInvalidBase62StringError()` error handler
+* Added `base64UrlEncodeFromBuffer()` data transform
+* Added `base64UrlEncodeFromString()` data transform
+* Added `base36UrlEncodeFromBuffer()` data transform
+* Added `base36UrlEncodeFromString()` data transform
+* Added `base32UrlEncodeFromBuffer()` data transform
+* Added `base32UrlEncodeFromString()` data transform
 
 ### Fixes
 
 ### Dependencies
 
 * Added `@ganbarodigital/ts-on-error`
-* Added `@types/mathjs`
-* Added `mathjs`
 
 ### Tools
 

@@ -12,7 +12,8 @@
     "prepack": "npm run build",
     "test": "npm run clean && tsc -p ./tsconfig-test.json && jasmine-ts --config=\"src/spec/support/jasmine.json\" \"src/**/*.spec.ts\"",
     "cover": "rimraf coverage && rimraf .nyc_output && nyc --cache=false npm run test",
-    "clean": "rimraf lib"
+    "clean": "rimraf lib",
+    "benchmark": "npm run build && node ./benchmark/index.js"
   },
   "contributors": [
     "Stuart Herbert <stuherbert@ganbarodigital.com> (https://ganbarodigital.com)"
@@ -34,6 +35,8 @@
   "devDependencies": {
     "@ganbarodigital/jasmine-ts": "0.3.1",
     "@types/jasmine": "^3.5.0",
+    "base-x": "^3.0.7",
+    "benchmark": "^2.1.4",
     "jasmine": "^3.5.0",
     "jasmine-ts-console-reporter": "^3.1.1",
     "nyc": "^15.0.0",
