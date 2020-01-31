@@ -31,26 +31,26 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase62String } from "./strings";
+import { isBase36UrlData } from "./base36url";
 
-describe("isBase62String()",  () => {
-    it("accepts a valid base62 string", () => {
-        const inputValue = "CsoB4HQ5gmgMyCenF7E";
-        const actualValue = isBase62String(inputValue);
+describe("isBase36UrlData()",  () => {
+    it("accepts a valid base36 string", () => {
+        const inputValue = "csob4hq5gmgnycenf7ezy";
+        const actualValue = isBase36UrlData(inputValue);
 
         expect(actualValue).toBeTrue();
     });
 
     const invalidStrings = [
-        "-CsoB4HQ5gmgMyCenF7E",
-        "CsoB4HQ5-gmgMyCenF7E",
-        "CsoB4HQ5gmgMyCenF7E-",
+        "-csob4hq5gmgnycenf7ezy",
+        "csob4hq5-gmgnycenf7ezy",
+        "csob4hq5gmgnycenf7ezy-",
     ];
 
     for (const invalidString of invalidStrings) {
-        it("rejects an invalid base62 string: " + invalidString, () => {
+        it("rejects an invalid base36 string: " + invalidString, () => {
             const inputValue = invalidString;
-            const actualValue = isBase62String(inputValue);
+            const actualValue = isBase36UrlData(inputValue);
 
             expect(actualValue).toBeFalse();
         });

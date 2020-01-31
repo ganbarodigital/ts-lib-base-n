@@ -33,27 +33,56 @@
 //
 import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-import { isBase62String } from "..";
-import { invalidBase62String, throwInvalidBase62StringError } from "../errors/invalidBase62String";
+/**
+ * unique ID, used to tell different errors apart
+ */
+export const invalidBase64UrlData = Symbol("Error: Invalid base64url Data");
 
 /**
- * guarantees that the input string only contains base62 characters
- *
- * if the input string contains anything else, the supplied OnError
- * handler is called
+ * Javascript error thrown when a string contains something that
+ * is not valid base64url
+ */
+export class InvalidBase64UrlData extends Error {
+    // holds the string that didn't contain base64-encoded data
+    public readonly invalidString: string;
+
+    /**
+     * constructor
+     *
+     * @param input
+     *        the string that didn't contain base64url-encoded data
+     */
+    constructor(input: string) {
+        super(invalidBase64UrlData.toString());
+        this.invalidString = input;
+    }
+}
+
+/**
+ * type-guard; proves that input is an InvalidBase64UrlData to the
+ * TypeScript compiler
  *
  * @param input
- * @param onError
  */
-export function mustBeBase62String(input: string, onError?: OnError<string|any>): void {
-    // make sure we have an error handler
-    onError = onError ?? throwInvalidBase62StringError;
-
-    // does the input pass the data guard?
-    if (isBase62String(input)) {
-        return;
+export function isInvalidBase64UrlData(input: unknown): input is InvalidBase64UrlData {
+    if (typeof(input) !== "object") {
+        return false;
     }
 
-    // it does not
-    onError(invalidBase62String, "input is not valid base62", input);
+    if ((input as InvalidBase64UrlData).invalidString === undefined) {
+        return false;
+    }
+
+    return true;
 }
+
+/**
+ * error callback; throws an InvalidBase64UrlData
+ *
+ * @param reason
+ * @param description
+ * @param extra
+ */
+export const throwInvalidBase64UrlData: OnError<string> = (reason, description, extra) => {
+    throw new InvalidBase64UrlData(extra);
+};

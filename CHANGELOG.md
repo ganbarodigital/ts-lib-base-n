@@ -25,18 +25,30 @@ The following changes have been completed, and will be included in the next tagg
 
 ### New
 
-* Added `isBase62String()` data guard
-* Added `isInvalidBase62StringError()` type guard
-* Added `InvalidBase62StringError` error type
-* Added `invalidBase62StringError` error ID symbol
-* Added `mustBeBase62StringError()` data guarantee
-* Added `throwInvalidBase62StringError()` error handler
-* Added `base64UrlEncodeFromBuffer()` data transform
-* Added `base64UrlEncodeFromString()` data transform
-* Added `base36UrlEncodeFromBuffer()` data transform
-* Added `base36UrlEncodeFromString()` data transform
 * Added `base32UrlEncodeFromBuffer()` data transform
 * Added `base32UrlEncodeFromString()` data transform
+* Added `base36UrlEncodeFromBuffer()` data transform
+* Added `base36UrlEncodeFromString()` data transform
+* Added `base64UrlEncodeFromBuffer()` data transform
+* Added `base64UrlEncodeFromString()` data transform
+* Added `InvalidBase32UrlData` error type
+* Added `invalidBase32UrlData` error ID symbol
+* Added `InvalidBase36UrlData` error type
+* Added `invalidBase36UrlData` error ID symbol
+* Added `InvalidBase64UrlData` error type
+* Added `invalidBase64UrlData` error ID symbol
+* Added `isBase32UrlData()` data guard
+* Added `isBase36UrlData()` data guard
+* Added `isBase64UrlData()` data guard
+* Added `isInvalidBase32UrlData()` type guard
+* Added `isInvalidBase36UrlData()` type guard
+* Added `isInvalidBase64UrlData()` type guard
+* Added `mustBeBase32UrlData()` data guarantee
+* Added `mustBeBase36UrlData()` data guarantee
+* Added `mustBeBase64UrlData()` data guarantee
+* Added `throwInvalidBase32UrlData()` error handler
+* Added `throwInvalidBase36UrlData()` error handler
+* Added `throwInvalidBase64UrlData()` error handler
 
 ### Fixes
 

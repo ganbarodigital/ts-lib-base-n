@@ -31,36 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
+import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-import { mustBeBase62String } from "./strings";
+import { isBase36UrlData } from "..";
+import { invalidBase36UrlData, throwInvalidBase36UrlData } from "../errors/invalidBase36UrlData";
 
-describe("mustBeBase62String()",  () => {
-    it("accepts a valid base62 string", () => {
-        const inputValue = "CsoB4HQ5gmgMyCenF7E";
-        mustBeBase62String(inputValue);
-    });
+/**
+ * guarantees that the input string only contains base36 characters
+ *
+ * if the input string contains anything else, the supplied OnError
+ * handler is called
+ *
+ * @param input
+ * @param onError
+ */
+export function mustBeBase36UrlData(input: string, onError?: OnError<string|any>): void {
+    // make sure we have an error handler
+    onError = onError ?? throwInvalidBase36UrlData;
 
-    it("accepts a user-defined error handler", () => {
-        const onError: OnError<string> = (reason, description, extra) => {
-            throw new Error("our test passed");
-        };
-
-        const inputValue = "CsoB4HQ5gmgMyCenF7E-";
-        expect(() => {mustBeBase62String(inputValue, onError); }).toThrowError("our test passed");
-    });
-
-    const invalidStrings = [
-        "-CsoB4HQ5gmgMyCenF7E",
-        "CsoB4HQ5-gmgMyCenF7E",
-        "CsoB4HQ5gmgMyCenF7E-",
-    ];
-
-    for (const invalidString of invalidStrings) {
-        it("rejects an invalid base62 string: " + invalidString, () => {
-            const inputValue = invalidString;
-
-            expect(() => {mustBeBase62String(inputValue); }).toThrowError();
-        });
+    // does the input pass the data guard?
+    if (isBase36UrlData(input)) {
+        return;
     }
-});
+
+    // it does not
+    onError(invalidBase36UrlData, "input is not valid base36", input);
+}

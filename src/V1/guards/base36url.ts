@@ -31,27 +31,16 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
+/**
+ * do we have a string that only contains base-36 characters?
+ *
+ * @param input
+ */
+export function isBase36UrlData(input: string): boolean {
+    // a simple regex will do the trick
+    const regex = RegExp("^[0-9a-z]+$");
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
-});
-
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
-
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
-});
+    // apply the regex
+    return regex.test(input);
+}

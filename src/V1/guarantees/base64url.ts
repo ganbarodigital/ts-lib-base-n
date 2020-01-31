@@ -33,55 +33,27 @@
 //
 import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-/**
- * represents the error 'invalidBase62String'
- */
-export const invalidBase62String = Symbol("Invalid Base62 String");
+import { isBase64UrlData } from "..";
+import { invalidBase64UrlData, throwInvalidBase64UrlData } from "../errors/invalidBase64UrlData";
 
 /**
- * Javascript error thrown when a string is not valid base62
- */
-export class InvalidBase62StringError extends Error {
-    // holds the string that didn't contain base62-encoded data
-    public readonly invalidString: string;
-
-    /**
-     * constructor
-     *
-     * @param input
-     *        the string that didn't contain base62-encoded data
-     */
-    constructor(input: string) {
-        super(invalidBase62String.toString());
-        this.invalidString = input;
-    }
-}
-
-/**
- * type-guard; proves that input is an InvalidBase62StringError to the
- * TypeScript compiler
+ * guarantees that the input string only contains base64 characters
+ *
+ * if the input string contains anything else, the supplied OnError
+ * handler is called
  *
  * @param input
+ * @param onError
  */
-export function isInvalidBase62StringError(input: any): input is InvalidBase62StringError {
-    if (typeof(input) !== "object") {
-        return false;
+export function mustBeBase64UrlData(input: string, onError?: OnError<string|any>): void {
+    // make sure we have an error handler
+    onError = onError ?? throwInvalidBase64UrlData;
+
+    // does the input pass the data guard?
+    if (isBase64UrlData(input)) {
+        return;
     }
 
-    if (input.invalidString === undefined) {
-        return false;
-    }
-
-    return true;
+    // it does not
+    onError(invalidBase64UrlData, "input is not valid base64", input);
 }
-
-/**
- * error callback; throws an InvalidBase62StringError
- *
- * @param reason
- * @param description
- * @param extra
- */
-export const throwInvalidBase62StringError: OnError<string> = (reason, description, extra) => {
-    throw new InvalidBase62StringError(extra);
-};

@@ -31,27 +31,28 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
+import { isBase64UrlData } from "./base64url";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
+describe("isBase64UrlData()",  () => {
+    it("accepts a valid base64 string", () => {
+        const inputValue = "CsoB4HQ5gmgMyCenF7E";
+        const actualValue = isBase64UrlData(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+        expect(actualValue).toBeTrue();
     });
-});
 
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
+    const invalidStrings = [
+        "+CsoB4HQ5gmgMyCenF7E",
+        "CsoB4HQ5+gmgMyCenF7E",
+        "CsoB4HQ5gmgMyCenF7E+",
+    ];
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
+    for (const invalidString of invalidStrings) {
+        it("rejects an invalid base64 string: " + invalidString, () => {
+            const inputValue = invalidString;
+            const actualValue = isBase64UrlData(inputValue);
+
+            expect(actualValue).toBeFalse();
+        });
+    }
 });

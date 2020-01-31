@@ -31,6 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { isBase32UrlData } from "../guards";
 import { base32UrlEncodeFromBuffer, base32UrlEncodeFromString } from "./base32";
 
 describe("base32UrlEncodeFromBuffer()",  () => {
@@ -40,6 +41,7 @@ describe("base32UrlEncodeFromBuffer()",  () => {
         const actualValue = base32UrlEncodeFromBuffer(inputValue);
 
         expect(actualValue).toEqual(expectedValue);
+        expect(isBase32UrlData(actualValue)).toBeTrue();
     });
 });
 
@@ -50,5 +52,6 @@ describe("base32UrlEncodeFromString()",  () => {
         const actualValue = base32UrlEncodeFromString(inputValue);
 
         expect(actualValue).toEqual(expectedValue);
+        expect(isBase32UrlData(actualValue)).toBeTrue();
     });
 });

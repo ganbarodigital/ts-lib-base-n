@@ -31,6 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { isBase64UrlData } from "../guards";
 import { base64UrlEncodeFromBuffer, base64UrlEncodeFromString } from "./base64";
 import { BaseNFlags } from "./flags";
 
@@ -71,6 +72,7 @@ describe("base64UrlEncodeFromString()",  () => {
 
         expect(actualValue).toEqual(expectedValue);
         expect(actualValue).toEqual(base64UrlEncodeFromBuffer(Buffer.from(inputValue)));
+        expect(isBase64UrlData(actualValue)).toBeTrue();
     });
 
     it("doesn't add the padding characters by default", () => {
@@ -80,6 +82,7 @@ describe("base64UrlEncodeFromString()",  () => {
 
         expect(actualValue).toEqual(expectedValue);
         expect(actualValue).toEqual(base64UrlEncodeFromBuffer(Buffer.from(inputValue)));
+        expect(isBase64UrlData(actualValue)).toBeTrue();
     });
 
     it("honours the flag to add the padding characters", () => {

@@ -31,27 +31,42 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
+import {
+    InvalidBase64UrlData,
+    invalidBase64UrlData,
+    isInvalidBase64UrlData,
+    throwInvalidBase64UrlData,
+} from "./invalidBase64UrlData";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
-
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+describe("isInvalidBase64Data()",  () => {
+    it("returns TRUE for an InvalidBase64Data object", () => {
+        const inputValue = new InvalidBase64UrlData("12345");
+        const actualValue = isInvalidBase64UrlData(inputValue);
+        expect(actualValue).toBeTrue();
     });
+
+    const invalidTypes = [
+        12345,
+        "hello world",
+        { },
+    ];
+
+    for (const invalidType of invalidTypes) {
+        it("returns FALSE for type '" + typeof(invalidType) + "'", () => {
+            const inputValue = invalidType;
+            const actualValue = isInvalidBase64UrlData(inputValue);
+            expect(actualValue).toBeFalse();
+        });
+    }
 });
 
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
-
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+describe("throwInvalidBase64Data()", () => {
+    it("throws an InvalidBase64Data object", () => {
+        const inputValue = "this is not valid";
+        expect(() => {throwInvalidBase64UrlData(
+            invalidBase64UrlData,
+            "this is a test",
+            inputValue,
+        )}).toThrowError();
     });
 });

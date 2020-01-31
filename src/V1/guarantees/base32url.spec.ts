@@ -31,27 +31,38 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
+import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
+import { mustBeBase32UrlData } from "./base32url";
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+describe("mustBeBase32UrlData()",  () => {
+    it("accepts a valid base32url string", () => {
+        const inputValue = "csob4hq5gmgntcenf7e";
+        mustBeBase32UrlData(inputValue);
     });
-});
 
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
+    it("accepts a user-defined error handler", () => {
+        const onError: OnError<string> = (reason, description, extra) => {
+            throw new Error("our test passed");
+        };
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+        const inputValue = "csob4hq5gmgntcenf7eX";
+        expect(() => {mustBeBase32UrlData(inputValue, onError); }).toThrowError("our test passed");
     });
+
+    const invalidStrings = [
+        "-csob4hq5gmgnycenf7e",
+        "csob4hq5-gmgnycenf7e",
+        "csob4hq5gmgnycenf7e-",
+        "Csob4hq5gmgnycenf7e",
+        "csob4hq5gmgnycenf7ew",
+    ];
+
+    for (const invalidString of invalidStrings) {
+        it("rejects an invalid base32url string: " + invalidString, () => {
+            const inputValue = invalidString;
+
+            expect(() => {mustBeBase32UrlData(inputValue); }).toThrowError();
+        });
+    }
 });

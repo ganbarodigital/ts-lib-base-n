@@ -31,16 +31,36 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
 
-/**
- * do we have a string that only contains base62 characters?
- *
- * @param input
- */
-export function isBase62String(input: string): boolean {
-    // a simple regex will do the trick
-    const regex = RegExp("^[0-9a-zA-Z]+$");
+import { mustBeBase36UrlData } from "./base36url";
 
-    // apply the regex
-    return regex.test(input);
-}
+describe("mustBeBase36UrlData()",  () => {
+    it("accepts a valid base36url string", () => {
+        const inputValue = "csob4hq5gmgnycenf7ezy";
+        mustBeBase36UrlData(inputValue);
+    });
+
+    it("accepts a user-defined error handler", () => {
+        const onError: OnError<string> = (reason, description, extra) => {
+            throw new Error("our test passed");
+        };
+
+        const inputValue = "csob4hq5gmgnycenf7ezyZ";
+        expect(() => {mustBeBase36UrlData(inputValue, onError); }).toThrowError("our test passed");
+    });
+
+    const invalidStrings = [
+        "-csob4hq5gmgnycenf7ezy",
+        "csob4hq5-gmgnycenf7ezy",
+        "csob4hq5gmgnycenf7ezy-",
+    ];
+
+    for (const invalidString of invalidStrings) {
+        it("rejects an invalid base36url string: " + invalidString, () => {
+            const inputValue = invalidString;
+
+            expect(() => {mustBeBase36UrlData(inputValue); }).toThrowError();
+        });
+    }
+});

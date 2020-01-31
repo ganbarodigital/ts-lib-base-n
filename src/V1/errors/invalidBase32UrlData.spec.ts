@@ -32,16 +32,16 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import {
-    invalidBase62String,
-    InvalidBase62StringError,
-    isInvalidBase62StringError,
-    throwInvalidBase62StringError,
-} from "./invalidBase62String";
+    InvalidBase32UrlData,
+    invalidBase32UrlData,
+    isInvalidBase32UrlData,
+    throwInvalidBase32UrlData,
+} from "./invalidBase32UrlData";
 
-describe("isInvalidBase62StringError()",  () => {
-    it("returns TRUE for an InvalidBase62StringError object", () => {
-        const inputValue = new InvalidBase62StringError("12345");
-        const actualValue = isInvalidBase62StringError(inputValue);
+describe("isInvalidBase32Data()",  () => {
+    it("returns TRUE for an InvalidBase32Data object", () => {
+        const inputValue = new InvalidBase32UrlData("12345");
+        const actualValue = isInvalidBase32UrlData(inputValue);
         expect(actualValue).toBeTrue();
     });
 
@@ -54,17 +54,17 @@ describe("isInvalidBase62StringError()",  () => {
     for (const invalidType of invalidTypes) {
         it("returns FALSE for type '" + typeof(invalidType) + "'", () => {
             const inputValue = invalidType;
-            const actualValue = isInvalidBase62StringError(inputValue);
+            const actualValue = isInvalidBase32UrlData(inputValue);
             expect(actualValue).toBeFalse();
         });
     }
 });
 
-describe("throwInvalidBase62StringError()", () => {
-    it("throws an InvalidBase62StringError object", () => {
+describe("throwInvalidBase32Data()", () => {
+    it("throws an InvalidBase32Data object", () => {
         const inputValue = "this is not valid";
-        expect(() => {throwInvalidBase62StringError(
-            invalidBase62String,
+        expect(() => {throwInvalidBase32UrlData(
+            invalidBase32UrlData,
             "this is a test",
             inputValue,
         )}).toThrowError();

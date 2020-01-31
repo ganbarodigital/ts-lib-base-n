@@ -31,27 +31,29 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
+import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
+import { isBase32UrlData } from "..";
+import { invalidBase32UrlData, throwInvalidBase32UrlData } from "../errors/invalidBase32UrlData";
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
-});
+/**
+ * guarantees that the input string only contains base32 characters
+ *
+ * if the input string contains anything else, the supplied OnError
+ * handler is called
+ *
+ * @param input
+ * @param onError
+ */
+export function mustBeBase32UrlData(input: string, onError?: OnError<string|any>): void {
+    // make sure we have an error handler
+    onError = onError ?? throwInvalidBase32UrlData;
 
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
+    // does the input pass the data guard?
+    if (isBase32UrlData(input)) {
+        return;
+    }
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
-});
+    // it does not
+    onError(invalidBase32UrlData, "input is not valid base32", input);
+}

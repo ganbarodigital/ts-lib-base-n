@@ -31,27 +31,58 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
+import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
+/**
+ * unique ID, used to tell different errors apart
+ */
+export const invalidBase36UrlData = Symbol("Error: Invalid base36url Data");
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
-});
+/**
+ * Javascript error thrown when a string contains something that
+ * is not valid base36url
+ */
+export class InvalidBase36UrlData extends Error {
+    // holds the string that didn't contain base36url-encoded data
+    public readonly invalidString: string;
 
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
+    /**
+     * constructor
+     *
+     * @param input
+     *        the string that didn't contain base36-encoded data
+     */
+    constructor(input: string) {
+        super(invalidBase36UrlData.toString());
+        this.invalidString = input;
+    }
+}
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
-});
+/**
+ * type-guard; proves that input is an InvalidBase36UrlData to the
+ * TypeScript compiler
+ *
+ * @param input
+ */
+export function isInvalidBase36UrlData(input: unknown): input is InvalidBase36UrlData {
+    if (typeof(input) !== "object") {
+        return false;
+    }
+
+    if ((input as InvalidBase36UrlData).invalidString === undefined) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * error callback; throws an InvalidBase36UrlData
+ *
+ * @param reason
+ * @param description
+ * @param extra
+ */
+export const throwInvalidBase36UrlData: OnError<string> = (reason, description, extra) => {
+    throw new InvalidBase36UrlData(extra);
+};

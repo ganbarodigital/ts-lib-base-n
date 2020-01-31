@@ -13,13 +13,23 @@ We've built this to use in shortening UUIDs in a URL-friendly way. There's nothi
   - [base64UrlEncodeFromBuffer()](#base64urlencodefrombuffer)
   - [base36UrlEncodeFromBuffer()](#base36urlencodefrombuffer)
   - [base32UrlEncodeFromBuffer()](#base32urlencodefrombuffer)
-  - [isBase62String()](#isbase62string)
-  - [mustBeBase62String()](#mustbebase62string)
+  - [isBase32UrlData()](#isbase32urldata)
+  - [isBase36UrlData()](#isbase36urldata)
+  - [isBase64UrlData()](#isbase64urldata)
+  - [mustBeBase64UrlData()](#mustbebase64urldata)
 - [V1 Error API](#v1-error-api)
-  - [invalidBase62String](#invalidbase62string)
-  - [InvalidBase62StringError](#invalidbase62stringerror)
-  - [isInvalidBase62StringError()](#isinvalidbase62stringerror)
-  - [throwInvalidBase62StringError()](#throwinvalidbase62stringerror)
+  - [invalidBase32UrlData](#invalidbase32urldata)
+  - [InvalidBase32Data](#invalidbase32data)
+  - [isInvalidBase32UrlData()](#isinvalidbase32urldata)
+  - [throwInvalidBase32UrlData()](#throwinvalidbase32urldata)
+  - [invalidBase36UrlData](#invalidbase36urldata)
+  - [InvalidBase36Data](#invalidbase36data)
+  - [isInvalidBase36UrlData()](#isinvalidbase36urldata)
+  - [throwInvalidBase36UrlData()](#throwinvalidbase36urldata)
+  - [invalidBase64UrlData](#invalidbase64urldata)
+  - [InvalidBase64Data](#invalidbase64data)
+  - [isInvalidBase64UrlData()](#isinvalidbase64urldata)
+  - [throwInvalidBase64UrlData()](#throwinvalidbase64urldata)
 - [NPM Scripts](#npm-scripts)
   - [npm run clean](#npm-run-clean)
   - [npm run build](#npm-run-build)
@@ -155,56 +165,78 @@ export function base32UrlEncodeFromBuffer(input: Buffer): string;
 
 This function uses JavaScript's `BigInt` type to do the heavy lifting. Different implementations of `BigInt` _may_ produce different results for the exact same `input` buffer.
 
-### isBase62String()
+### isBase32UrlData()
 
 ```typescript
-function isBase62String(input: string): boolean
+function isBase32UrlData(input: string): boolean
 ```
 
-`isBase62String()` is a _data guard_.
+`isBase32UrlData()` is a _data guard_.
 
-* Returns `true` if the `input` only contains valid base62 characters.
+* Returns `true` if the `input` only contains valid base32url characters (0-9, a-v).
 * Returns `false` otherwise.
 
-### mustBeBase62String()
+### isBase36UrlData()
+
+```typescript
+function isBase36UrlData(input: string): boolean
+```
+
+`isBase36UrlData()` is a _data guard_.
+
+* Returns `true` if the `input` only contains valid base36url characters (0-9, a-z).
+* Returns `false` otherwise.
+
+### isBase64UrlData()
+
+```typescript
+function isBase64UrlData(input: string): boolean
+```
+
+`isBase64UrlData()` is a _data guard_.
+
+* Returns `true` if the `input` only contains valid [base64url][RFC 4648] characters.
+* Returns `false` otherwise.
+
+### mustBeBase64UrlData()
 
 ```typescript
 import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-function mustBeBase62String(input: string, onError?: OnError<string|any>): void
+function mustBeBase64UrlData(input: string, onError?: OnError<string|any>): void
 ```
 
-`mustBeBase62String()` is a _data guarantee_.
+`mustBeBase62UrlData()` is a _data guarantee_.
 
-* If the `input` string is valid base62-encoded data, it will return.
+* If the `input` string is valid base64url-encoded data, it will return.
 * Otherwise, it will call the supplied `onError` error callback.
 
 Other notes:
 
-* `onError` is optional. It uses `throwInvalidBase62StringError()` if you do not provide one.
+* `onError` is optional. It uses `throwInvalidBase64UrlDataError()` if you do not provide one.
 
 ## V1 Error API
 
-### invalidBase62String
+### invalidBase32UrlData
 
 ```typescript
-const invalidBase62String = Symbol("Invalid Base62 String");
+const invalidBase32UrlData = Symbol("Error: Invalid base32url Data");
 ```
 
-Unique ID for the family of errors around strings that do not contain valid base62 data.
+Unique ID for the family of errors around strings that do not contain valid base32url data.
 
-### InvalidBase62StringError
+### InvalidBase32Data
 
 ```typescript
-class InvalidBase62StringError extends Error {
-    // holds the string that didn't contain base62-encoded data
+class InvalidBase32Data extends Error {
+    // holds the string that didn't contain base32url-encoded data
     public readonly invalidString: string;
 
     /**
      * constructor
      *
      * @param input
-     *        the string that didn't contain base62-encoded data
+     *        the string that didn't contain base32url-encoded data
      */
     constructor(input: string) {
         super();
@@ -213,25 +245,121 @@ class InvalidBase62StringError extends Error {
 }
 ```
 
-JavaScript Error. Thrown when we encounter a string that does not contain valid base62 data.
+JavaScript Error. Thrown when we encounter a string that does not contain valid base32url data.
 
-### isInvalidBase62StringError()
+### isInvalidBase32UrlData()
 
 ```typescript
-function isInvalidBase62StringError(input: any): input is InvalidBase62StringError
+function isInvalidBase32UrlData(input: any): input is InvalidBase32UrlData
 ```
 
-`isInvalidBase62StringError()` is a _type guard_. Use it to prove to the TypeScript compiler that you are dealing with an `InvalidBase62StringError` type.
+`isInvalidBase32UrlData()` is a _type guard_. Use it to prove to the TypeScript compiler that you are dealing with an `InvalidBase32UrlData` type.
 
-### throwInvalidBase62StringError()
+### throwInvalidBase32UrlData()
 
 ```typescript
 import { OnError } from "@ganbarodigital/ts-on-error/V1";
 
-const throwInvalidBase62StringError: OnError<string> = (reason, description, extra)
+const throwInvalidBase32UrlData: OnError<string> = (reason, description, extra)
 ```
 
-`throwInvalidBase62StringError()` is an error handler. When called, it throws a new `InvalidBase62StringError` object.
+`throwInvalidBase32UrlData()` is an error handler. When called, it throws a new `InvalidBase32UrlData` object.
+
+### invalidBase36UrlData
+
+```typescript
+const invalidBase36UrlData = Symbol("Error: Invalid base36url Data");
+```
+
+Unique ID for the family of errors around strings that do not contain valid base36url data.
+
+### InvalidBase36Data
+
+```typescript
+class InvalidBase36Data extends Error {
+    // holds the string that didn't contain base36url-encoded data
+    public readonly invalidString: string;
+
+    /**
+     * constructor
+     *
+     * @param input
+     *        the string that didn't contain base36url-encoded data
+     */
+    constructor(input: string) {
+        super();
+        this.invalidString = input;
+    }
+}
+```
+
+JavaScript Error. Thrown when we encounter a string that does not contain valid base36url data.
+
+### isInvalidBase36UrlData()
+
+```typescript
+function isInvalidBase36UrlData(input: any): input is InvalidBase36UrlData
+```
+
+`isInvalidBase36UrlData()` is a _type guard_. Use it to prove to the TypeScript compiler that you are dealing with an `InvalidBase36UrlData` type.
+
+### throwInvalidBase36UrlData()
+
+```typescript
+import { OnError } from "@ganbarodigital/ts-on-error/V1";
+
+const throwInvalidBase36UrlData: OnError<string> = (reason, description, extra)
+```
+
+`throwInvalidBase36UrlData()` is an error handler. When called, it throws a new `InvalidBase36UrlData` object.
+
+### invalidBase64UrlData
+
+```typescript
+const invalidBase64UrlData = Symbol("Error: Invalid base64url Data");
+```
+
+Unique ID for the family of errors around strings that do not contain valid base64url data.
+
+### InvalidBase64Data
+
+```typescript
+class InvalidBase64Data extends Error {
+    // holds the string that didn't contain base64url-encoded data
+    public readonly invalidString: string;
+
+    /**
+     * constructor
+     *
+     * @param input
+     *        the string that didn't contain base64url-encoded data
+     */
+    constructor(input: string) {
+        super();
+        this.invalidString = input;
+    }
+}
+```
+
+JavaScript Error. Thrown when we encounter a string that does not contain valid base64url data.
+
+### isInvalidBase64UrlData()
+
+```typescript
+function isInvalidBase64UrlData(input: any): input is InvalidBase64UrlData
+```
+
+`isInvalidBase64UrlData()` is a _type guard_. Use it to prove to the TypeScript compiler that you are dealing with an `InvalidBase64UrlData` type.
+
+### throwInvalidBase64UrlData()
+
+```typescript
+import { OnError } from "@ganbarodigital/ts-on-error/V1";
+
+const throwInvalidBase64UrlData: OnError<string> = (reason, description, extra)
+```
+
+`throwInvalidBase64UrlData()` is an error handler. When called, it throws a new `InvalidBase64UrlData` object.
 
 ## NPM Scripts
 

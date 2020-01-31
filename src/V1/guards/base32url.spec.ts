@@ -31,27 +31,30 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { isBase36UrlData } from "../guards";
-import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
+import { isBase32UrlData } from "./base32url";
 
-describe("base36UrlEncodeFromBuffer()",  () => {
-    it("encodes a bytes buffer", () => {
-        const inputValue = Buffer.from("306af19c41a44b21857232308e6c03ea", "hex");
-        const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
-        const actualValue = base36UrlEncodeFromBuffer(inputValue);
+describe("isBase32UrlData()",  () => {
+    it("accepts a valid base32 string", () => {
+        const inputValue = "csob4hq5gmgntcenf7e";
+        const actualValue = isBase32UrlData(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+        expect(actualValue).toBeTrue();
     });
-});
 
-describe("base36UrlEncodeFromString()",  () => {
-    it("encodes a string", () => {
-        const inputValue = "306af19c-41a4-4b21-8572-32308e6c03ea";
-        const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
-        const actualValue = base36UrlEncodeFromString(inputValue);
+    const invalidStrings = [
+        "-csob4hq5gmgnycenf7e",
+        "csob4hq5-gmgnycenf7e",
+        "csob4hq5gmgnycenf7e-",
+        "Csob4hq5gmgnycenf7e",
+        "csob4hq5gmgnycenf7ew",
+    ];
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
-    });
+    for (const invalidString of invalidStrings) {
+        it("rejects an invalid base32 string: " + invalidString, () => {
+            const inputValue = invalidString;
+            const actualValue = isBase32UrlData(inputValue);
+
+            expect(actualValue).toBeFalse();
+        });
+    }
 });

@@ -32,4 +32,4 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./invalidBase62String";
+export * from "./invalidBase64UrlData";
