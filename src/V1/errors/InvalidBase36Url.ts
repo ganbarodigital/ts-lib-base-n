@@ -31,58 +31,65 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/V1";
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithNoExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
-/**
- * unique ID, used to tell different errors apart
- */
-export const invalidBase36UrlData = Symbol("Error: Invalid base36url Data");
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
+
+interface InvalidBase36UrlExtraData extends ExtraPublicData {
+    public: {
+        input: string;
+    };
+}
+
+export type InvalidBase36UrlTemplate = ErrorTableTemplateWithNoExtraData<
+    PackageErrorTable,
+    "invalid-base36url",
+    InvalidBase36UrlExtraData
+>;
+
+type InvalidBase36UrlData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "invalid-base36url",
+    InvalidBase36UrlTemplate,
+    InvalidBase36UrlExtraData
+>;
+
+type InvalidBase36SPR = StructuredProblemReport<
+    PackageErrorTable,
+    "invalid-base36url",
+    InvalidBase36UrlTemplate,
+    InvalidBase36UrlExtraData,
+    InvalidBase36UrlData
+>;
 
 /**
  * Javascript error thrown when a string contains something that
  * is not valid base36url
  */
-export class InvalidBase36UrlData extends Error {
-    // holds the string that didn't contain base36url-encoded data
-    public readonly invalidString: string;
+export class InvalidBase36UrlError extends AppError<
+    PackageErrorTable,
+    "invalid-base36url",
+    InvalidBase36UrlTemplate,
+    InvalidBase36UrlExtraData,
+    InvalidBase36UrlData,
+    InvalidBase36SPR
+> {
+    public constructor(params: InvalidBase36UrlExtraData & AppErrorParams) {
+        const errorData: InvalidBase36UrlData = {
+            template: ERROR_TABLE["invalid-base36url"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
 
-    /**
-     * constructor
-     *
-     * @param input
-     *        the string that didn't contain base36-encoded data
-     */
-    constructor(input: string) {
-        super(invalidBase36UrlData.toString());
-        this.invalidString = input;
+        super(StructuredProblemReport.from(errorData));
     }
 }
-
-/**
- * type-guard; proves that input is an InvalidBase36UrlData to the
- * TypeScript compiler
- *
- * @param input
- */
-export function isInvalidBase36UrlData(input: unknown): input is InvalidBase36UrlData {
-    if (typeof(input) !== "object") {
-        return false;
-    }
-
-    if ((input as InvalidBase36UrlData).invalidString === undefined) {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * error callback; throws an InvalidBase36UrlData
- *
- * @param reason
- * @param description
- * @param extra
- */
-export const throwInvalidBase36UrlData: OnError<string> = (reason, description, extra) => {
-    throw new InvalidBase36UrlData(extra);
-};

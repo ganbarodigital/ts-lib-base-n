@@ -31,10 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/V1";
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 import { isBase32UrlData } from "..";
-import { invalidBase32UrlData, throwInvalidBase32UrlData } from "../errors/invalidBase32UrlData";
+import { InvalidBase32UrlError } from "../errors/InvalidBase32Url";
 
 /**
  * guarantees that the input string only contains base32 characters
@@ -45,15 +45,12 @@ import { invalidBase32UrlData, throwInvalidBase32UrlData } from "../errors/inval
  * @param input
  * @param onError
  */
-export function mustBeBase32UrlData(input: string, onError?: OnError<string|any>): void {
-    // make sure we have an error handler
-    onError = onError ?? throwInvalidBase32UrlData;
-
+export function mustBeBase32UrlData(input: string, onError: OnError = THROW_THE_ERROR): void {
     // does the input pass the data guard?
     if (isBase32UrlData(input)) {
         return;
     }
 
     // it does not
-    onError(invalidBase32UrlData, "input is not valid base32", input);
+    onError(new InvalidBase32UrlError({public: {input}}));
 }

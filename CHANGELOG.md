@@ -31,43 +31,22 @@ The following changes have been completed, and will be included in the next tagg
 * Added `base36UrlEncodeFromString()` data transform
 * Added `base64UrlEncodeFromBuffer()` data transform
 * Added `base64UrlEncodeFromString()` data transform
-* Added `InvalidBase32UrlData` error type
-* Added `invalidBase32UrlData` error ID symbol
-* Added `InvalidBase36UrlData` error type
-* Added `invalidBase36UrlData` error ID symbol
-* Added `InvalidBase64UrlData` error type
-* Added `invalidBase64UrlData` error ID symbol
+* Added `InvalidBase32UrlError` error class
+* Added `InvalidBase36UrlError` error class
+* Added `InvalidBase64UrlError` error class
 * Added `isBase32UrlData()` data guard
 * Added `isBase36UrlData()` data guard
 * Added `isBase64UrlData()` data guard
-* Added `isInvalidBase32UrlData()` type guard
-* Added `isInvalidBase36UrlData()` type guard
-* Added `isInvalidBase64UrlData()` type guard
 * Added `mustBeBase32UrlData()` data guarantee
 * Added `mustBeBase36UrlData()` data guarantee
 * Added `mustBeBase64UrlData()` data guarantee
-* Added `throwInvalidBase32UrlData()` error handler
-* Added `throwInvalidBase36UrlData()` error handler
-* Added `throwInvalidBase64UrlData()` error handler
 
 ### Fixes
 
 ### Dependencies
 
-* Added `@ganbarodigital/ts-on-error`
-
-### Tools
-
-## v0.0.1
-
-Released Monday, 1st January 2020.
-
-### Backwards-Compatibility Breaks
-
-### New
-
-### Fixes
-
-### Dependencies
+* Added `@ganbarodigital/ts-lib-error-reporting`
+* Added `@ganbarodigital/ts-lib-http-types`
+* Added `@ganbarodigital/ts-lib-packagename`
 
 ### Tools

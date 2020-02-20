@@ -31,10 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/V1";
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 import { isBase64UrlData } from "..";
-import { invalidBase64UrlData, throwInvalidBase64UrlData } from "../errors/invalidBase64UrlData";
+import { InvalidBase64UrlError } from "../errors/InvalidBase64Url";
 
 /**
  * guarantees that the input string only contains base64 characters
@@ -45,15 +45,12 @@ import { invalidBase64UrlData, throwInvalidBase64UrlData } from "../errors/inval
  * @param input
  * @param onError
  */
-export function mustBeBase64UrlData(input: string, onError?: OnError<string|any>): void {
-    // make sure we have an error handler
-    onError = onError ?? throwInvalidBase64UrlData;
-
+export function mustBeBase64UrlData(input: string, onError: OnError = THROW_THE_ERROR): void {
     // does the input pass the data guard?
     if (isBase64UrlData(input)) {
         return;
     }
 
     // it does not
-    onError(invalidBase64UrlData, "input is not valid base64", input);
+    onError(new InvalidBase64UrlError({public: {input}}));
 }

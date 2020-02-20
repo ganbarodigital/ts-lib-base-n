@@ -31,7 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/lib/V1";
+import { OnError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 import { mustBeBase64UrlData } from "./base64url";
 
@@ -42,7 +42,7 @@ describe("mustBeBase64Data()",  () => {
     });
 
     it("accepts a user-defined error handler", () => {
-        const onError: OnError<string> = (reason, description, extra) => {
+        const onError: OnError = (e) => {
             throw new Error("our test passed");
         };
 

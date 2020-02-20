@@ -31,10 +31,10 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/V1";
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 import { isBase36UrlData } from "..";
-import { invalidBase36UrlData, throwInvalidBase36UrlData } from "../errors/invalidBase36UrlData";
+import { InvalidBase36UrlError } from "../errors/InvalidBase36Url";
 
 /**
  * guarantees that the input string only contains base36 characters
@@ -45,15 +45,12 @@ import { invalidBase36UrlData, throwInvalidBase36UrlData } from "../errors/inval
  * @param input
  * @param onError
  */
-export function mustBeBase36UrlData(input: string, onError?: OnError<string|any>): void {
-    // make sure we have an error handler
-    onError = onError ?? throwInvalidBase36UrlData;
-
+export function mustBeBase36UrlData(input: string, onError: OnError = THROW_THE_ERROR): void {
     // does the input pass the data guard?
     if (isBase36UrlData(input)) {
         return;
     }
 
     // it does not
-    onError(invalidBase36UrlData, "input is not valid base36", input);
+    onError(new InvalidBase36UrlError({public: {input}}));
 }

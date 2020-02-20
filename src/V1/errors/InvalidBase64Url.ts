@@ -32,41 +32,64 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import {
-    InvalidBase32UrlData,
-    invalidBase32UrlData,
-    isInvalidBase32UrlData,
-    throwInvalidBase32UrlData,
-} from "./invalidBase32UrlData";
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithNoExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
-describe("isInvalidBase32Data()",  () => {
-    it("returns TRUE for an InvalidBase32Data object", () => {
-        const inputValue = new InvalidBase32UrlData("12345");
-        const actualValue = isInvalidBase32UrlData(inputValue);
-        expect(actualValue).toBeTrue();
-    });
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
 
-    const invalidTypes = [
-        12345,
-        "hello world",
-        { },
-    ];
+interface InvalidBase64UrlExtraData extends ExtraPublicData {
+    public: {
+        input: string;
+    };
+}
 
-    for (const invalidType of invalidTypes) {
-        it("returns FALSE for type '" + typeof(invalidType) + "'", () => {
-            const inputValue = invalidType;
-            const actualValue = isInvalidBase32UrlData(inputValue);
-            expect(actualValue).toBeFalse();
-        });
+export type InvalidBase64UrlTemplate = ErrorTableTemplateWithNoExtraData<
+    PackageErrorTable,
+    "invalid-base64url",
+    InvalidBase64UrlExtraData
+>;
+
+type InvalidBase64UrlData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "invalid-base64url",
+    InvalidBase64UrlTemplate,
+    InvalidBase64UrlExtraData
+>;
+
+type InvalidBase64SPR = StructuredProblemReport<
+    PackageErrorTable,
+    "invalid-base64url",
+    InvalidBase64UrlTemplate,
+    InvalidBase64UrlExtraData,
+    InvalidBase64UrlData
+>;
+
+/**
+ * Javascript error thrown when a string contains something that
+ * is not valid base64url
+ */
+export class InvalidBase64UrlError extends AppError<
+    PackageErrorTable,
+    "invalid-base64url",
+    InvalidBase64UrlTemplate,
+    InvalidBase64UrlExtraData,
+    InvalidBase64UrlData,
+    InvalidBase64SPR
+> {
+    public constructor(params: InvalidBase64UrlExtraData & AppErrorParams) {
+        const errorData: InvalidBase64UrlData = {
+            template: ERROR_TABLE["invalid-base64url"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
+
+        super(StructuredProblemReport.from(errorData));
     }
-});
-
-describe("throwInvalidBase32Data()", () => {
-    it("throws an InvalidBase32Data object", () => {
-        const inputValue = "this is not valid";
-        expect(() => {throwInvalidBase32UrlData(
-            invalidBase32UrlData,
-            "this is a test",
-            inputValue,
-        )}).toThrowError();
-    });
-});
+}

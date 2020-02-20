@@ -31,58 +31,65 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import { OnError } from "@ganbarodigital/ts-on-error/V1";
+import {
+    AppError,
+    AppErrorParams,
+    ErrorTableTemplateWithNoExtraData,
+    ExtraPublicData,
+    StructuredProblemReport,
+    StructuredProblemReportDataWithExtraData,
+} from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
-/**
- * unique ID, used to tell different errors apart
- */
-export const invalidBase64UrlData = Symbol("Error: Invalid base64url Data");
+import { ERROR_TABLE, PackageErrorTable } from "./PackageErrorTable";
+
+interface InvalidBase32UrlExtraData extends ExtraPublicData {
+    public: {
+        input: string;
+    };
+}
+
+export type InvalidBase32UrlTemplate = ErrorTableTemplateWithNoExtraData<
+    PackageErrorTable,
+    "invalid-base32url",
+    InvalidBase32UrlExtraData
+>;
+
+type InvalidBase32UrlData = StructuredProblemReportDataWithExtraData<
+    PackageErrorTable,
+    "invalid-base32url",
+    InvalidBase32UrlTemplate,
+    InvalidBase32UrlExtraData
+>;
+
+type InvalidBase32SPR = StructuredProblemReport<
+    PackageErrorTable,
+    "invalid-base32url",
+    InvalidBase32UrlTemplate,
+    InvalidBase32UrlExtraData,
+    InvalidBase32UrlData
+>;
 
 /**
  * Javascript error thrown when a string contains something that
- * is not valid base64url
+ * is not valid base32url
  */
-export class InvalidBase64UrlData extends Error {
-    // holds the string that didn't contain base64-encoded data
-    public readonly invalidString: string;
+export class InvalidBase32UrlError extends AppError<
+    PackageErrorTable,
+    "invalid-base32url",
+    InvalidBase32UrlTemplate,
+    InvalidBase32UrlExtraData,
+    InvalidBase32UrlData,
+    InvalidBase32SPR
+> {
+    public constructor(params: InvalidBase32UrlExtraData & AppErrorParams) {
+        const errorData: InvalidBase32UrlData = {
+            template: ERROR_TABLE["invalid-base32url"],
+            errorId: params.errorId,
+            extra: {
+                public: params.public,
+            },
+        };
 
-    /**
-     * constructor
-     *
-     * @param input
-     *        the string that didn't contain base64url-encoded data
-     */
-    constructor(input: string) {
-        super(invalidBase64UrlData.toString());
-        this.invalidString = input;
+        super(StructuredProblemReport.from(errorData));
     }
 }
-
-/**
- * type-guard; proves that input is an InvalidBase64UrlData to the
- * TypeScript compiler
- *
- * @param input
- */
-export function isInvalidBase64UrlData(input: unknown): input is InvalidBase64UrlData {
-    if (typeof(input) !== "object") {
-        return false;
-    }
-
-    if ((input as InvalidBase64UrlData).invalidString === undefined) {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * error callback; throws an InvalidBase64UrlData
- *
- * @param reason
- * @param description
- * @param extra
- */
-export const throwInvalidBase64UrlData: OnError<string> = (reason, description, extra) => {
-    throw new InvalidBase64UrlData(extra);
-};

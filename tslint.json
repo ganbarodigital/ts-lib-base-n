@@ -6,8 +6,9 @@
     "jsRules": {},
     "rules": {
         "eofline": false,
+		"interface-name": false,
         "interface-over-type-literal": false,
-        "no-bitwise": false
+		"object-literal-sort-keys": false
     },
     "rulesDirectory": []
 }
