@@ -39,7 +39,7 @@ npm install @ganbarodigital/ts-lib-base-n
 
 ```typescript
 // add this import to your Typescript code
-import { base64UrlEncode } from "@ganbarodigital/ts-lib-base-n/V1"
+import { base64UrlEncode } from "@ganbarodigital/ts-lib-base-n/lib/v1"
 ```
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.
@@ -57,7 +57,7 @@ import {
     base64UrlEncodeFromBuffer,
     base36UrlEncodeFromBuffer,
     base32UrlEncodeFromBuffer,
-} from "@ganbarodigital/ts-lib-base-n/V1";
+} from "@ganbarodigital/ts-lib-base-n/lib/v1";
 
 // get rid of the hyphens from the UUID
 //
