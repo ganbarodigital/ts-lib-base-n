@@ -39,7 +39,7 @@ npm install @ganbarodigital/ts-lib-base-n
 
 ```typescript
 // add this import to your Typescript code
-import { base64UrlEncode } from "@ganbarodigital/ts-lib-base-n/V1"
+import { base64UrlEncode } from "@ganbarodigital/ts-lib-base-n/lib/v1"
 ```
 
 __VS Code users:__ once you've added a single import anywhere in your project, you'll then be able to auto-import anything else that this library exports.
@@ -57,7 +57,7 @@ import {
     base64UrlEncodeFromBuffer,
     base36UrlEncodeFromBuffer,
     base32UrlEncodeFromBuffer,
-} from "@ganbarodigital/ts-lib-base-n/V1";
+} from "@ganbarodigital/ts-lib-base-n/lib/v1";
 
 // get rid of the hyphens from the UUID
 //
@@ -194,7 +194,7 @@ function isBase64UrlData(input: string): boolean
 ### mustBeBase32UrlData()
 
 ```typescript
-import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 function mustBeBase32UrlData(input: string, onError: OnError = THROW_THE_ERROR): void
 ```
@@ -207,7 +207,7 @@ function mustBeBase32UrlData(input: string, onError: OnError = THROW_THE_ERROR):
 ### mustBeBase36UrlData()
 
 ```typescript
-import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 function mustBeBase36UrlData(input: string, onError: OnError = THROW_THE_ERROR): void
 ```
@@ -220,7 +220,7 @@ function mustBeBase36UrlData(input: string, onError: OnError = THROW_THE_ERROR):
 ### mustBeBase64UrlData()
 
 ```typescript
-import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
+import { OnError, THROW_THE_ERROR } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 function mustBeBase64UrlData(input: string, onError: OnError = THROW_THE_ERROR): void
 ```
@@ -235,7 +235,7 @@ function mustBeBase64UrlData(input: string, onError: OnError = THROW_THE_ERROR):
 ### InvalidBase32UrlError
 
 ```typescript
-import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
+import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 class InvalidBase32UrlError extends AppError;
 ```
@@ -245,7 +245,7 @@ JavaScript Error. Thrown when we encounter a string that does not contain valid 
 ### InvalidBase36UrlError
 
 ```typescript
-import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
+import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 class InvalidBase36UrlError extends AppError;
 ```
@@ -255,7 +255,7 @@ JavaScript Error. Thrown when we encounter a string that does not contain valid 
 ### InvalidBase64UrlError
 
 ```typescript
-import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
+import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 
 class InvalidBase64UrlError extends AppError;
 ```
