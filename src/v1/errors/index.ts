@@ -32,7 +32,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 
-export * from "./PackageErrorTable";
-export * from "./InvalidBase32Url";
-export * from "./InvalidBase36Url";
-export * from "./InvalidBase64Url";
+export { PackageErrorTable, ERROR_TABLE } from "./PackageErrorTable";
+export { InvalidBase32UrlError } from "./InvalidBase32Url";
+export { InvalidBase36UrlError } from "./InvalidBase36Url";
+export { InvalidBase64UrlError } from "./InvalidBase64Url";

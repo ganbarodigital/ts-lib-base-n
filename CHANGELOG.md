@@ -21,6 +21,14 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.0.2
+
+Released Thursday, 27th February 2020.
+
+### Fixes
+
+* Added forward exports to the `index.ts` files (doh!)
+
 ## v0.0.1
 
 Released Thursday, 27th February 2020.

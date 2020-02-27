@@ -1,3 +1,4 @@
+// tslint:disable: no-bitwise
 //
 // Copyright (c) 2020-present Ganbaro Digital Ltd
 // All rights reserved.
@@ -104,7 +105,6 @@ export function base64UrlEncodeFromString(
 
     const maxBitGroups = Math.ceil(input.length * 8 / 6);
 
-    // tslint:disable-next-line: no-shadowed-variable
     const readByte = (i: number): number => {
         if (i < input.length) {
             return input.charCodeAt(i);
@@ -113,7 +113,6 @@ export function base64UrlEncodeFromString(
         return 0;
     };
 
-    // tslint:disable-next-line: no-shadowed-variable
     const readQuantum = (): void => {
         quantum = (readByte(inputOffset) << 16)
         + (readByte(inputOffset + 1) << 8)
@@ -122,7 +121,6 @@ export function base64UrlEncodeFromString(
         inputOffset = inputOffset + 3;
     };
 
-    // tslint:disable-next-line: no-shadowed-variable
     const extractBitGroups = (): void => {
         bitGroups = [
             (quantum & bitGroup1) >>> 18,
@@ -132,7 +130,6 @@ export function base64UrlEncodeFromString(
         ];
     };
 
-    // tslint:disable-next-line: no-shadowed-variable
     const translateBitGroups = (): void => {
         retval = retval + TABLE[bitGroups[0]] + TABLE[bitGroups[1]] + TABLE[bitGroups[2]] + TABLE[bitGroups[3]];
     };
