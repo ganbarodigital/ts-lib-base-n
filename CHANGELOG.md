@@ -21,26 +21,30 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
-### Backwards-Compatibility Breaks
-
-### New
-
-### Fixes
-
-### Dependencies
-
-### Tools
-
 ## v0.0.1
 
-Released Monday, 1st January 2020.
-
-### Backwards-Compatibility Breaks
+Released Thursday, 27th February 2020.
 
 ### New
 
-### Fixes
+* Added `base32UrlEncodeFromBuffer()` data transform
+* Added `base32UrlEncodeFromString()` data transform
+* Added `base36UrlEncodeFromBuffer()` data transform
+* Added `base36UrlEncodeFromString()` data transform
+* Added `base64UrlEncodeFromBuffer()` data transform
+* Added `base64UrlEncodeFromString()` data transform
+* Added `InvalidBase32UrlError` error class
+* Added `InvalidBase36UrlError` error class
+* Added `InvalidBase64UrlError` error class
+* Added `isBase32UrlData()` data guard
+* Added `isBase36UrlData()` data guard
+* Added `isBase64UrlData()` data guard
+* Added `mustBeBase32UrlData()` data guarantee
+* Added `mustBeBase36UrlData()` data guarantee
+* Added `mustBeBase64UrlData()` data guarantee
 
 ### Dependencies
 
-### Tools
+* Added `@ganbarodigital/ts-lib-error-reporting`
+* Added `@ganbarodigital/ts-lib-http-types`
+* Added `@ganbarodigital/ts-lib-packagename`
