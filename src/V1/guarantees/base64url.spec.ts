@@ -32,6 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { OnError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import { expect } from "chai";
+import { describe } from "mocha";
 
 import { mustBeBase64UrlData } from "./base64url";
 
@@ -47,7 +49,7 @@ describe("mustBeBase64Data()",  () => {
         };
 
         const inputValue = "CsoB4HQ5gmgMyCenF7E+";
-        expect(() => {mustBeBase64UrlData(inputValue, onError); }).toThrowError("our test passed");
+        expect(() => {mustBeBase64UrlData(inputValue, onError); }).to.throw("our test passed");
     });
 
     const invalidStrings = [
@@ -60,7 +62,7 @@ describe("mustBeBase64Data()",  () => {
         it("rejects an invalid base64 string: " + invalidString, () => {
             const inputValue = invalidString;
 
-            expect(() => {mustBeBase64UrlData(inputValue); }).toThrowError();
+            expect(() => {mustBeBase64UrlData(inputValue); }).to.throw();
         });
     }
 });

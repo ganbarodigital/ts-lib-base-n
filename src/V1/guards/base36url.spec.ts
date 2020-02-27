@@ -31,6 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
+
 import { isBase36UrlData } from "./base36url";
 
 describe("isBase36UrlData()",  () => {
@@ -38,7 +41,7 @@ describe("isBase36UrlData()",  () => {
         const inputValue = "csob4hq5gmgnycenf7ezy";
         const actualValue = isBase36UrlData(inputValue);
 
-        expect(actualValue).toBeTrue();
+        expect(actualValue).to.equal(true);
     });
 
     const invalidStrings = [
@@ -52,7 +55,7 @@ describe("isBase36UrlData()",  () => {
             const inputValue = invalidString;
             const actualValue = isBase36UrlData(inputValue);
 
-            expect(actualValue).toBeFalse();
+            expect(actualValue).to.equal(false);
         });
     }
 });

@@ -32,6 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { OnError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import { expect } from "chai";
+import { describe } from "mocha";
 
 import { mustBeBase32UrlData } from "./base32url";
 
@@ -47,7 +49,7 @@ describe("mustBeBase32UrlData()",  () => {
         };
 
         const inputValue = "csob4hq5gmgntcenf7eX";
-        expect(() => {mustBeBase32UrlData(inputValue, onError); }).toThrowError("our test passed");
+        expect(() => {mustBeBase32UrlData(inputValue, onError); }).to.throw("our test passed");
     });
 
     const invalidStrings = [
@@ -62,7 +64,7 @@ describe("mustBeBase32UrlData()",  () => {
         it("rejects an invalid base32url string: " + invalidString, () => {
             const inputValue = invalidString;
 
-            expect(() => {mustBeBase32UrlData(inputValue); }).toThrowError();
+            expect(() => {mustBeBase32UrlData(inputValue); }).to.throw();
         });
     }
 });

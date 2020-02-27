@@ -31,6 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
+
 import { isBase36UrlData } from "../guards";
 import { base36UrlEncodeFromBuffer, base36UrlEncodeFromString } from "./base36";
 
@@ -40,8 +43,8 @@ describe("base36UrlEncodeFromBuffer()",  () => {
         const expectedValue = "2v6wzt8h82b4efcjdelmiaxuy";
         const actualValue = base36UrlEncodeFromBuffer(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+        expect(actualValue).to.equal(expectedValue);
+        expect(isBase36UrlData(actualValue)).to.equal(true);
     });
 });
 
@@ -51,7 +54,7 @@ describe("base36UrlEncodeFromString()",  () => {
         const expectedValue = "2imeed0dqv5jzu32jekcovxobofe73qakmmreyq6io224p4qegysdco1";
         const actualValue = base36UrlEncodeFromString(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase36UrlData(actualValue)).toBeTrue();
+        expect(actualValue).to.equal(expectedValue);
+        expect(isBase36UrlData(actualValue)).to.equal(true);
     });
 });

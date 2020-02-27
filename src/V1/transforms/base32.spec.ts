@@ -31,6 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
+
 import { isBase32UrlData } from "../guards";
 import { base32UrlEncodeFromBuffer, base32UrlEncodeFromString } from "./base32";
 
@@ -40,8 +43,8 @@ describe("base32UrlEncodeFromBuffer()",  () => {
         const expectedValue = "1gdbopogd49cgoashi6276o0va";
         const actualValue = base32UrlEncodeFromBuffer(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase32UrlData(actualValue)).toBeTrue();
+        expect(actualValue).to.equal(expectedValue);
+        expect(isBase32UrlData(actualValue)).to.equal(true);
     });
 });
 
@@ -51,7 +54,7 @@ describe("base32UrlEncodeFromString()",  () => {
         const expectedValue = "1j60r62phh75hiqd1hc4q2qd3268oiqe1l6sp2qcpi6co3gp9mcco36pb1";
         const actualValue = base32UrlEncodeFromString(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(isBase32UrlData(actualValue)).toBeTrue();
+        expect(actualValue).to.equal(expectedValue);
+        expect(isBase32UrlData(actualValue)).to.equal(true);
     });
 });

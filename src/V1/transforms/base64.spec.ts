@@ -31,6 +31,9 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
+import { expect } from "chai";
+import { describe } from "mocha";
+
 import { isBase64UrlData } from "../guards";
 import { base64UrlEncodeFromBuffer, base64UrlEncodeFromString } from "./base64";
 import { BaseNFlags } from "./flags";
@@ -41,8 +44,8 @@ describe("base64UrlEncodeFromBuffer()",  () => {
         const expectedValue = "AQIDBAX__vz7-g";
         const actualValue = base64UrlEncodeFromBuffer(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(actualValue).toEqual(base64UrlEncodeFromString(inputValue.toString("binary")));
+        expect(actualValue).to.equal(expectedValue);
+        expect(actualValue).to.equal(base64UrlEncodeFromString(inputValue.toString("binary")));
     });
 
     it("doesn't add the padding characters by default", () => {
@@ -50,8 +53,8 @@ describe("base64UrlEncodeFromBuffer()",  () => {
         const expectedValue = "AQIDBAX__vz7-g";
         const actualValue = base64UrlEncodeFromBuffer(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(actualValue).toEqual(base64UrlEncodeFromString(inputValue.toString("binary")));
+        expect(actualValue).to.equal(expectedValue);
+        expect(actualValue).to.equal(base64UrlEncodeFromString(inputValue.toString("binary")));
     });
 
     it("honours the flag to add the padding characters", () => {
@@ -59,8 +62,8 @@ describe("base64UrlEncodeFromBuffer()",  () => {
         const expectedValue = "AQIDBAX__vz7-g==";
         const actualValue = base64UrlEncodeFromBuffer(inputValue, BaseNFlags.addPadding);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(actualValue).toEqual(base64UrlEncodeFromString(inputValue.toString("binary"), BaseNFlags.addPadding));
+        expect(actualValue).to.equal(expectedValue);
+        expect(actualValue).to.equal(base64UrlEncodeFromString(inputValue.toString("binary"), BaseNFlags.addPadding));
     });
 });
 
@@ -70,9 +73,9 @@ describe("base64UrlEncodeFromString()",  () => {
         const expectedValue = "MDEwMjAzMDQwNWZmZmVmY2ZiZmE";
         const actualValue = base64UrlEncodeFromString(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(actualValue).toEqual(base64UrlEncodeFromBuffer(Buffer.from(inputValue)));
-        expect(isBase64UrlData(actualValue)).toBeTrue();
+        expect(actualValue).to.equal(expectedValue);
+        expect(actualValue).to.equal(base64UrlEncodeFromBuffer(Buffer.from(inputValue)));
+        expect(isBase64UrlData(actualValue)).to.equal(true);
     });
 
     it("doesn't add the padding characters by default", () => {
@@ -80,9 +83,9 @@ describe("base64UrlEncodeFromString()",  () => {
         const expectedValue = "MDEwMjAzMDQwNWZmZmVmY2Y";
         const actualValue = base64UrlEncodeFromString(inputValue);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(actualValue).toEqual(base64UrlEncodeFromBuffer(Buffer.from(inputValue)));
-        expect(isBase64UrlData(actualValue)).toBeTrue();
+        expect(actualValue).to.equal(expectedValue);
+        expect(actualValue).to.equal(base64UrlEncodeFromBuffer(Buffer.from(inputValue)));
+        expect(isBase64UrlData(actualValue)).to.equal(true);
     });
 
     it("honours the flag to add the padding characters", () => {
@@ -90,7 +93,7 @@ describe("base64UrlEncodeFromString()",  () => {
         const expectedValue = "MDEwMjAzMDQwNWZmZmVmY2Y=";
         const actualValue = base64UrlEncodeFromString(inputValue, BaseNFlags.addPadding);
 
-        expect(actualValue).toEqual(expectedValue);
-        expect(actualValue).toEqual(base64UrlEncodeFromBuffer(Buffer.from(inputValue), BaseNFlags.addPadding));
+        expect(actualValue).to.equal(expectedValue);
+        expect(actualValue).to.equal(base64UrlEncodeFromBuffer(Buffer.from(inputValue), BaseNFlags.addPadding));
     });
 });

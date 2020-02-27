@@ -32,6 +32,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 import { OnError } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import { expect } from "chai";
+import { describe } from "mocha";
 
 import { mustBeBase36UrlData } from "./base36url";
 
@@ -47,7 +49,7 @@ describe("mustBeBase36UrlData()",  () => {
         };
 
         const inputValue = "csob4hq5gmgnycenf7ezyZ";
-        expect(() => {mustBeBase36UrlData(inputValue, onError); }).toThrowError("our test passed");
+        expect(() => {mustBeBase36UrlData(inputValue, onError); }).to.throw("our test passed");
     });
 
     const invalidStrings = [
@@ -60,7 +62,7 @@ describe("mustBeBase36UrlData()",  () => {
         it("rejects an invalid base36url string: " + invalidString, () => {
             const inputValue = invalidString;
 
-            expect(() => {mustBeBase36UrlData(inputValue); }).toThrowError();
+            expect(() => {mustBeBase36UrlData(inputValue); }).to.throw();
         });
     }
 });
