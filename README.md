@@ -20,9 +20,9 @@ We've built this to use in shortening UUIDs in a URL-friendly way. There's nothi
   - [mustBeBase36UrlData()](#mustbebase36urldata)
   - [mustBeBase64UrlData()](#mustbebase64urldata)
 - [V1 Error API](#v1-error-api)
-  - [InvalidBase32Url](#invalidbase32url)
+  - [InvalidBase32UrlError](#invalidbase32urlerror)
   - [InvalidBase36UrlError](#invalidbase36urlerror)
-  - [InvalidBase64Url](#invalidbase64url)
+  - [InvalidBase64UrlError](#invalidbase64urlerror)
 - [NPM Scripts](#npm-scripts)
   - [npm run clean](#npm-run-clean)
   - [npm run build](#npm-run-build)
@@ -232,12 +232,12 @@ function mustBeBase64UrlData(input: string, onError: OnError = THROW_THE_ERROR):
 
 ## V1 Error API
 
-### InvalidBase32Url
+### InvalidBase32UrlError
 
 ```typescript
 import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
 
-class InvalidBase32UrlData extends AppError;
+class InvalidBase32UrlError extends AppError;
 ```
 
 JavaScript Error. Thrown when we encounter a string that does not contain valid base32url data.
@@ -252,7 +252,7 @@ class InvalidBase36UrlError extends AppError;
 
 JavaScript Error. Thrown when we encounter a string that does not contain valid base36url data.
 
-### InvalidBase64Url
+### InvalidBase64UrlError
 
 ```typescript
 import { AppError } from "@ganbarodigital/ts-lib-error-reporting/lib-v1";
