@@ -21,6 +21,10 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+### Dependencies
+
+* Upgraded everything, to fix a vulnerability in the `minimist` package
+
 ## v0.0.2
 
 Released Thursday, 27th February 2020.
