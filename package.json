@@ -1,6 +1,6 @@
 {
   "name": "@ganbarodigital/ts-lib-base-n",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Support for various baseN encoding/decoding",
   "repository": "github:ganbarodigital/ts-lib-base-n",
   "main": "lib/index.js",
