@@ -34,7 +34,7 @@
 import {
     AppError,
     AppErrorParams,
-    ErrorTableTemplateWithNoExtraData,
+    ErrorTableTemplate,
     ExtraPublicData,
     StructuredProblemReport,
     StructuredProblemReportDataWithExtraData,
@@ -48,10 +48,9 @@ interface InvalidBase64UrlExtraData extends ExtraPublicData {
     };
 }
 
-export type InvalidBase64UrlTemplate = ErrorTableTemplateWithNoExtraData<
+export type InvalidBase64UrlTemplate = ErrorTableTemplate<
     PackageErrorTable,
-    "invalid-base64url",
-    InvalidBase64UrlExtraData
+    "invalid-base64url"
 >;
 
 type InvalidBase64UrlData = StructuredProblemReportDataWithExtraData<

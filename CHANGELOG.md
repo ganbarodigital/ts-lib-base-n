@@ -21,6 +21,12 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+### Dependencies
+
+* Upgraded to v0.3 of `@ganbarodigital/ts-lib-error-reporting`
+* Upgraded to v0.3 of `@ganbarodigital/ts-lib-packagename`
+* Upgraded to v0.3 of `@ganbarodigital/ts-lib-http-types`
+
 ### Tools
 
 * Upgraded the `scripts` section in `package.json` to the latest standard.
