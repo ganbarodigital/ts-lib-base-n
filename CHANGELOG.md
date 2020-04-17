@@ -21,6 +21,20 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+## v0.1.0
+
+Released Friday, 17th April 2020.
+
+### Dependencies
+
+* Upgraded to v0.3 of `@ganbarodigital/ts-lib-error-reporting`
+* Upgraded to v0.3 of `@ganbarodigital/ts-lib-packagename`
+* Upgraded to v0.3 of `@ganbarodigital/ts-lib-http-types`
+
+### Tools
+
+* Upgraded the `scripts` section in `package.json` to the latest standard.
+
 ## v0.0.3
 
 ### Dependencies

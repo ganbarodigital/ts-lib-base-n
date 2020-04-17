@@ -31,12 +31,7 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-import {
-    ErrorTable,
-    ErrorTableTemplateWithNoExtraData,
-    ExtraDataTemplate,
-    NoExtraDataTemplate,
-} from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
+import { ErrorTable, ErrorTableTemplate } from "@ganbarodigital/ts-lib-error-reporting/lib/v1";
 import { httpStatusCodeFrom } from "@ganbarodigital/ts-lib-http-types/lib/v1";
 import { packageNameFrom } from "@ganbarodigital/ts-lib-packagename/lib/v1";
 
@@ -46,19 +41,16 @@ import { InvalidBase64UrlTemplate } from "./InvalidBase64Url";
 
 const PACKAGE_NAME = packageNameFrom("@ganbarodigital/ts-lib-base-n/lib/v1");
 
+type PackageErrorTableIndex<T extends ErrorTable> = ErrorTableTemplate<T, string>;
+
 export class PackageErrorTable implements ErrorTable {
-    [key: string]: ErrorTableTemplateWithNoExtraData<ErrorTable, string, ExtraDataTemplate | NoExtraDataTemplate>;
+    [key: string]: PackageErrorTableIndex<PackageErrorTable>;
 
     public "invalid-base32url": InvalidBase32UrlTemplate = {
         packageName: PACKAGE_NAME,
         errorName: "invalid-base32url",
         detail: "input is not in base32url format",
         status: httpStatusCodeFrom(422),
-        extra: {
-            public: {
-                input: "",
-            },
-        },
     };
 
     public "invalid-base36url": InvalidBase36UrlTemplate = {
@@ -66,11 +58,6 @@ export class PackageErrorTable implements ErrorTable {
         errorName: "invalid-base36url",
         detail: "input is not in base36url format",
         status: httpStatusCodeFrom(422),
-        extra: {
-            public: {
-                input: "",
-            },
-        },
     };
 
     public "invalid-base64url": InvalidBase64UrlTemplate = {
@@ -78,11 +65,6 @@ export class PackageErrorTable implements ErrorTable {
         errorName: "invalid-base64url",
         detail: "input is not in base64url format",
         status: httpStatusCodeFrom(422),
-        extra: {
-            public: {
-                input: "",
-            },
-        },
     };
 }
 
