@@ -21,6 +21,10 @@ For each release, changes are grouped under these headings:
 
 The following changes have been completed, and will be included in the next tagged release.
 
+### Tools
+
+* Upgraded the `scripts` section in `package.json` to the latest standard.
+
 ## v0.0.3
 
 ### Dependencies
