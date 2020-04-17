@@ -1,5 +1,7 @@
 # BaseN Library for Typescript
 
+![Node.js CI](https://github.com/ganbarodigital/ts-lib-base-n/workflows/Node.js%20CI/badge.svg)
+
 ## Introduction
 
 This TypeScript library will convert to/from various base-N encodings.
